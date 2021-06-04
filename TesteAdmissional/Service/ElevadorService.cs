@@ -21,25 +21,20 @@ namespace TesteAdmissional.Service
         public List<int> andarMenosUtilizado()
         {
             List<int> lAndares = new List<int>();
-            int lAndaresMenosUtilizados = 0;
-            for (int i = 0; i <= pElevador.Count; i++)
-                if (lAndaresMenosUtilizados <= pElevador.Count(x => x.andar == i) ) 
+            int lAndaresMenosUtilizados = 1;
+            var qtd = 0;
+
+            foreach (var item in pElevador)
+            {
+                qtd = pElevador.Count(e => e.andar == item.andar);
+                if (qtd <= lAndaresMenosUtilizados)
                 {
-                    //lAndaresMenosUtilizados = pElevador[i] == i ? pElevador : -1
-                    //Count(x => x.andar == i)                    
-                    lAndaresMenosUtilizados = pElevador.Count(x => x.andar == i);                 
-                    lAndares.Add(lAndaresMenosUtilizados);
-                    
-                        //lAndares.Add(lAndaresMenosUtilizados);
+                    lAndaresMenosUtilizados = qtd;
+                    lAndares.Add(item.andar);
                 }
-                    
+            }
 
-            //for (int i = 0; i < pElevador.Count - 1; i++)
-              //  if (lAndaresMenosUtilizados == pElevador.Count(x => x.andar == i) )
-                 //   lAndares.Add(lAndaresMenosUtilizados);
-            
             return lAndares;
-
         }
 
         public List<char> elevadorMaisFrequentado()
@@ -142,6 +137,7 @@ namespace TesteAdmissional.Service
         public List<char> periodoMaiorFluxoElevadorMaisFrequentado()
         {
             List<char> lListaElevador = new List<char>();
+            //List<string> lListaPeriodoElevador = new List<string>();
             List<char> elevadores = new List<char>();
             if (pElevadorObj == null)
                 elevadores = elevadorMaisFrequentado();
