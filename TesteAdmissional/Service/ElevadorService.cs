@@ -22,19 +22,21 @@ namespace TesteAdmissional.Service
         {
             List<int> lAndares = new List<int>();
             int lAndaresMenosUtilizados = 0;
-            for (int i = 0; i < pElevador.Count - 1; i++)
-                if (i == 0 || lAndaresMenosUtilizados > pElevador.Count(x => x.andar == i) ) 
+            for (int i = 0; i <= pElevador.Count; i++)
+                if (lAndaresMenosUtilizados <= pElevador.Count(x => x.andar == i) ) 
                 {
                     //lAndaresMenosUtilizados = pElevador[i] == i ? pElevador : -1
-                    //Count(x => x.andar == i)
-                    lAndaresMenosUtilizados = pElevador.Count(x => x.andar == i);
-                    //lAndares.Add(lAndaresMenosUtilizados);
+                    //Count(x => x.andar == i)                    
+                    lAndaresMenosUtilizados = pElevador.Count(x => x.andar == i);                 
+                    lAndares.Add(lAndaresMenosUtilizados);
+                    
+                        //lAndares.Add(lAndaresMenosUtilizados);
                 }
                     
 
-            for (int i = 0; i < pElevador.Count - 1; i++)
-                if (lAndaresMenosUtilizados == pElevador.Count(x => x.andar == i))
-                    lAndares.Add(i);
+            //for (int i = 0; i < pElevador.Count - 1; i++)
+              //  if (lAndaresMenosUtilizados == pElevador.Count(x => x.andar == i) )
+                 //   lAndares.Add(lAndaresMenosUtilizados);
             
             return lAndares;
 
