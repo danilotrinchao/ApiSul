@@ -136,38 +136,39 @@ namespace TesteAdmissional.Service
 
         public List<char> periodoMaiorFluxoElevadorMaisFrequentado()
         {
-            List<char> lListaElevador = new List<char>();
-            //List<string> lListaPeriodoElevador = new List<string>();
-            List<char> elevadores = new List<char>();
-            if (pElevadorObj == null)
-                elevadores = elevadorMaisFrequentado();
-            else
-                elevadores.Add(pElevadorObj.elevador);
+            List<Elevador> Turnos = new List<Elevador>();
+            List<char> Turno_Elevador = new List<char>();
+            var turnoRepitido = 0;
+            var qtdTurno = 0;
+            var elevadorRepitido = 0;
+            var qtdEelvador = 0;
 
-            foreach (var elevador in elevadores)
+            foreach (var turnos in pElevador)
             {
-                int lFluxoMatutino = pElevador.Count(x => x.elevador == elevador && x.turno == 'M'),
-                    lFluxoVespertino = pElevador.Count(x => x.elevador == elevador && x.turno == 'V'),
-                    lFluxoNoturno = pElevador.Count(x => x.elevador == elevador && x.turno == 'N'),
-                    lFluxoMaiorUtilizacao = 0;
+                qtdTurno = pElevador.Count(e => e.turno == turnos.turno);
 
-                lFluxoMaiorUtilizacao = lFluxoMatutino;
-                if (lFluxoMaiorUtilizacao < lFluxoVespertino)
-                    lFluxoMaiorUtilizacao = lFluxoVespertino;
-                if (lFluxoMaiorUtilizacao < lFluxoNoturno)
-                    lFluxoMaiorUtilizacao = lFluxoNoturno;
+                if (qtdTurno >= turnoRepitido)
+                {
+                    Turnos.Remove(turnos);
+                    turnoRepitido = qtdTurno;
+                    Turnos.Add(turnos);
 
-                if (lFluxoMaiorUtilizacao == lFluxoMatutino)
-                    lListaElevador.Add('M');              
-                if (lFluxoMaiorUtilizacao == lFluxoVespertino)
-                    lListaElevador.Add('V');              
-                if (lFluxoMaiorUtilizacao == lFluxoNoturno)
-                    lListaElevador.Add('N');
 
+                }
             }
 
-            pElevadorObj = null;
-            return lListaElevador;
+            foreach (var elevadores in Turnos)
+            {
+                qtdEelvador = Turnos.Count(e => e.elevador == elevadores.elevador);
+                if (qtdEelvador > elevadorRepitido)
+                {
+                    Turno_Elevador.Remove(elevadores.elevador);
+                    elevadorRepitido = qtdEelvador;
+                    Turno_Elevador.Add(elevadores.elevador);
+                    Turno_Elevador.Add(elevadores.turno);
+                }
+            }
+            return Turno_Elevador;
         }
 
         public List<char> periodoMaiorUtilizacaoConjuntoElevadores()
@@ -197,37 +198,40 @@ namespace TesteAdmissional.Service
 
         public List<char> periodoMenorFluxoElevadorMenosFrequentado()
         {
-            List<char> lListaElevador = new List<char>();
-            List<char> elevadores = new List<char>();
-            if (pElevadorObj == null)
-                elevadores = elevadorMenosFrequentado();
-            else
-                elevadores.Add(pElevadorObj.elevador);
+            List<Elevador> Turnos = new List<Elevador>();
+            List<char> Turno_Elevador = new List<char>();
+            var turnoRepitido = 10;
+            var qtdTurno = 0;
+            var elevadorRepitido = 10;
+            var qtdEelvador = 0;
 
-            foreach (var elevador in elevadores)
+            foreach (var turnos in pElevador)
             {
-                int lFluxoMatutino = pElevador.Count(x => x.elevador == elevador && x.turno == 'M'),
-                    lfluxoVespertino = pElevador.Count(x => x.elevador == elevador && x.turno == 'V'),
-                    lfluxoNoturno = pElevador.Count(x => x.elevador == elevador && x.turno == 'N'),
-                    lfluxoMenorUtilizacao = 0;
+                qtdTurno = pElevador.Count(e => e.turno == turnos.turno);
 
-                lfluxoMenorUtilizacao = lFluxoMatutino;
-                if (lfluxoMenorUtilizacao > lfluxoVespertino)
-                    lfluxoMenorUtilizacao = lfluxoVespertino;
-                if (lfluxoMenorUtilizacao > lfluxoNoturno)
-                    lfluxoMenorUtilizacao = lfluxoNoturno;
+                if (qtdTurno < turnoRepitido)
+                {
+                    if (Turnos.Count > 0)
+                    {
+                        Turnos.RemoveAt(0);
 
-                if (lfluxoMenorUtilizacao == lFluxoMatutino)
-                    lListaElevador.Add('M');
-                if (lfluxoMenorUtilizacao == lfluxoVespertino)
-                    lListaElevador.Add('V');
-                if (lfluxoMenorUtilizacao == lfluxoNoturno)
-                    lListaElevador.Add('N');
-
+                    }
+                    turnoRepitido = qtdTurno;
+                    Turnos.Add(turnos);
+                }
             }
 
-            pElevadorObj = null;
-            return lListaElevador;
+            foreach (var elevadores in Turnos)
+            {
+                qtdEelvador = Turnos.Count(e => e.elevador == elevadores.elevador);
+                if (qtdEelvador < elevadorRepitido)
+                {
+                    elevadorRepitido = qtdEelvador;
+                    Turno_Elevador.Add(elevadores.elevador);
+                    Turno_Elevador.Add(elevadores.turno);
+                }
+            }
+            return Turno_Elevador;
         }
     }
 }
