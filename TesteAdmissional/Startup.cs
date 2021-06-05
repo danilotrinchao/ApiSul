@@ -36,7 +36,7 @@ namespace TesteAdmissional
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
 
-            IServiceCollection serviceCollection = services.AddDbContext<ElevadorContext>(opt => opt.UseInMemoryDatabase());
+            //IServiceCollection serviceCollection = services.AddDbContext<ElevadorContext>(opt => opt.UseInMemoryDatabase());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c =>
             {
