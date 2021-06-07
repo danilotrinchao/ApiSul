@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using TesteAdmissional.Contexto;
 using TesteAdmissional.Interface;
 using TesteAdmissional.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
